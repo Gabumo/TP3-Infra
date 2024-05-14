@@ -2,12 +2,12 @@
 
 ## Auteurs du TP
 
-- Prénom1 Nom1 (Matricule1)
-- Prénom2 Nom2 (Matricule2)
+- Gabriel Morissette (1441492)
+- Francis Dubois (2391567)
 
 ## Information projet
 
-- Lien Docker Hub :
+- Lien Docker Hub : 
 
 ## Lien de la vidéo de présentation
 
