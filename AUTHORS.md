@@ -7,7 +7,7 @@
 
 ## Information projet
 
-- Lien Docker Hub : 
+- Lien Docker Hub : https://hub.docker.com/repository/docker/gabmo/gc.webreact/general
 
 ## Lien de la vidéo de présentation
 
