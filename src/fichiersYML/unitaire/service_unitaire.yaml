@@ -1,0 +1,36 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: unitaire-service
+  namespace: unitaire
+  labels:
+    app: GC.WebReact
+    tier: web
+    env: unitaire
+spec:
+  selector:
+    app: GC.WebReact
+    tier: web
+    env: unitaire
+  ports:
+    - protocol: TCP
+      port: 80
+      nodePort: 30000
+  type: NodePort
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: sql-unitaire-service
+  namespace: sql-unitaire
+  labels:
+    app: GC.WebReact
+    env: sql
+spec:
+  selector:
+    type: sqlservr
+  ports:
+    name: sqlserver-unitaire
+    port: 1433
