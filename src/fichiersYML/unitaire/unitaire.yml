@@ -24,19 +24,22 @@ spec:
   template:
     metadata:
       labels:
-        app: webapp-unitaire
-        tier: frontend
+        app: GC.WebReact
+        tier: web
         env: unitaire
     spec:
       containers:
         - name: webapp-unitaire
-          image: gabmo/gc.webreact:latest
+          image: gabmo/gc.webreact:1
           ports:
             - containerPort: 80
+          env:
+            - name: ConnectionStrings__DefaultConnection
+              value: "Server=sql-unitaire-service;Database=GC.WebReact;User Id=sa;Password=P@ssw0rd;MultipleActiveResultSets=true;"
 
 ---
 
-apiVersion: v1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: database-deployment-unitaire
@@ -55,7 +58,7 @@ spec:
   template:
     metadata:
       labels:
-        app: database-unitaire
+        app: GC.WebReact
         tier: database
         env: unitaire
     spec:

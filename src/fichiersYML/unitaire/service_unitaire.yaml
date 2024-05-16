@@ -27,10 +27,14 @@ metadata:
   namespace: unitaire
   labels:
     app: GC.WebReact
-    env: sql
+    env: unitaire
 spec:
   selector:
     tier: database
+    env: unitaire
   ports:
   - name: sqlserver-unitaire
+    protocol: TCP
     port: 1433
+    nodePort: 31000
+  type: NodePort
