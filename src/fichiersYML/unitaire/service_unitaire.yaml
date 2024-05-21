@@ -5,6 +5,7 @@ metadata:
   namespace: unitaire
 data: 
   connectionString_Default: U2VydmVyPXNxbC11bml0YWlyZS1zZXJ2aWNlO0RhdGFiYXNlPUdDLldlYlJlYWN0O1VzZXIgSWQ9c2E7UGFzc3dvcmQ9UEBzc3cwcmQ7TXVsdGlwbGVBY3RpdmVSZXN1bHRTZXRzPXRydWU7
+  MSSQL_SA_PASSWORD: UEBzc3cwcmQ=
 # "Server=sql-unitaire-service;Database=GC.WebReact;User Id=sa;Password=P@ssw0rd;MultipleActiveResultSets=true;"
 ---
 

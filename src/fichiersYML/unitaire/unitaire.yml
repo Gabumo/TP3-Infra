@@ -74,7 +74,10 @@ spec:
             - name: ACCEPT_EULA
               value: "Y"
             - name: MSSQL_SA_PASSWORD
-              value: "P@ssw0rd"
+              valueFrom:
+                secretKeyRef:
+                  name: secret-unitaire
+                  key: MSSQL_SA_PASSWORD
           resources:
             requests:
               cpu: 0.5
