@@ -73,6 +73,11 @@ spec:
           env:
             - name: ACCEPT_EULA
               value: "Y"
+            - name: MSSQL_PID
+              valueFrom:
+                configMapKeyRef:
+                  name: configmap-unitaire
+                  key: MSSQL_PID
             - name: MSSQL_SA_PASSWORD
               valueFrom:
                 secretKeyRef:
