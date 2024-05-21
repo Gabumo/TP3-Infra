@@ -35,7 +35,10 @@ spec:
             - containerPort: 80
           env:
             - name: ConnectionStrings__DefaultConnection
-              value: "Server=sql-unitaire-service;Database=GC.WebReact;User Id=sa;Password=P@ssw0rd;MultipleActiveResultSets=true;"
+              valueFrom:
+                secretKeyRef:
+                  name: secret-unitaire
+                  key: connectionString_Default
 
 ---
 
