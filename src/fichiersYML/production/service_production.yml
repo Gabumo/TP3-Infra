@@ -1,0 +1,92 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: production-pv
+  namespace: production
+spec:
+  storageClassName: manual
+  capacity:
+    storage: 1Gi
+  accessModes:
+  - ReadWriteOnce
+  hostPath:
+    path: /run/desktop/mnt/host/c/DonneesInfra/Production
+
+---
+
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: production-pvc
+  namespace: production
+spec:
+  storageClassName: manual
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+  volumeName: production-pv
+
+---
+
+apiVersion: v1
+kind: Secret
+metadata:
+  name: secret-production
+  namespace: production
+data: 
+  connectionString_Default: U2VydmVyPXNxbC1wcm9kdWN0aW9uLXNlcnZpY2U7RGF0YWJhc2U9R0MuV2ViUmVhY3Q7VXNlciBJZD1zYTtQYXNzd29yZD1QQHNzdzByZDtNdWx0aXBsZUFjdGl2ZVJlc3VsdFNldHM9dHJ1ZTs=
+  MSSQL_SA_PASSWORD: UEBzc3cwcmQ=
+# "Server=sql-production-service;Database=GC.WebReact;User Id=sa;Password=P@ssw0rd;MultipleActiveResultSets=true;"
+---
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: configmap-production
+  namespace: production
+data:
+  ASPNETCORE_URLS: "http://0.0.0.0:80"
+  MSSQL_PID: "Developer"
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: production-service
+  namespace: production
+  labels:
+    app: GC.WebReact
+    tier: web
+    env: production
+spec:
+  selector:
+    app: GC.WebReact
+    tier: web
+    env: production
+  ports:
+    - protocol: TCP
+      port: 80
+      nodePort: 30002
+  type: NodePort
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: sql-production-service
+  namespace: production
+  labels:
+    app: GC.WebReact
+    env: production
+spec:
+  selector:
+    tier: database
+    env: production
+  ports:
+  - name: sqlserver-production
+    protocol: TCP
+    port: 1433
