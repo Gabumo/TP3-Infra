@@ -48,7 +48,6 @@ metadata:
   namespace: unitaire
 data:
   ASPNETCORE_URLS: "http://0.0.0.0:80"
-  ConnectionStrings__DefaultConnection: "Server=sql-unitaire-service;Database=GC.WebReact;User Id=sa;Password=P@ssw0rd;MultipleActiveResultSets=true;"
   MSSQL_PID: "Developer"
 
 ---
