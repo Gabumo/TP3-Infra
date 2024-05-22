@@ -36,9 +36,9 @@ metadata:
   name: secret-acceptation
   namespace: acceptation
 data: 
-  connectionString_Default: U2VydmVyPXNxbC11bml0YWlyZS1zZXJ2aWNlO0RhdGFiYXNlPUdDLldlYlJlYWN0O1VzZXIgSWQ9c2E7UGFzc3dvcmQ9UEBzc3cwcmQ7TXVsdGlwbGVBY3RpdmVSZXN1bHRTZXRzPXRydWU7
+  connectionString_Default: U2VydmVyPXNxbC1hY2NlcHRhdGlvbi1zZXJ2aWNlO0RhdGFiYXNlPUdDLldlYlJlYWN0O1VzZXIgSWQ9c2E7UGFzc3dvcmQ9UEBzc3cwcmQ7TXVsdGlwbGVBY3RpdmVSZXN1bHRTZXRzPXRydWU7
   MSSQL_SA_PASSWORD: UEBzc3cwcmQ=
-# "Server=sql-acceptation-service;Database=GC.WebReact;User Id=sa;Password=P@ssw0rd;MultipleActiveResultSets=true;"
+
 ---
 
 apiVersion: v1
@@ -69,7 +69,7 @@ spec:
   ports:
     - protocol: TCP
       port: 80
-      nodePort: 30000
+      nodePort: 30001
   type: NodePort
 
 ---
