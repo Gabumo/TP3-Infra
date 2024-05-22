@@ -1,0 +1,98 @@
+apiVersion : v1
+kind: Namespace
+metadata:
+  name: acceptation
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: webapp-deployment-acceptation
+  namespace: acceptation
+  labels:
+    app: GC.WebReact
+    tier: web
+    env: acceptation
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: GC.WebReact
+      tier: web
+      env: acceptation
+  template:
+    metadata:
+      labels:
+        app: GC.WebReact
+        tier: web
+        env: acceptation
+    spec:
+      containers:
+        - name: webapp-acceptation
+          image: gabmo/gc.webreact:1
+          ports:
+            - containerPort: 80
+          env:
+            - name: ConnectionStrings__DefaultConnection
+              valueFrom:
+                secretKeyRef:
+                  name: secret-acceptation
+                  key: connectionString_Default
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: database-deployment-acceptation
+  namespace: acceptation
+  labels:
+    app: GC.WebReact
+    tier: database
+    env: acceptation
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: GC.WebReact
+      tier: database
+      env: acceptation
+  template:
+    metadata:
+      labels:
+        app: GC.WebReact
+        tier: database
+        env: acceptation
+    spec:
+      containers:
+        - name: sqlserver-acceptation
+          image: mcr.microsoft.com/mssql/server:2019-latest
+          ports:
+            - containerPort: 1433
+          env:
+            - name: ACCEPT_EULA
+              value: "Y"
+            - name: MSSQL_PID
+              valueFrom:
+                configMapKeyRef:
+                  name: configmap-acceptation
+                  key: MSSQL_PID
+            - name: MSSQL_SA_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: secret-acceptation
+                  key: MSSQL_SA_PASSWORD
+          resources:
+            requests:
+              cpu: 0.5
+              memory: 2Gi
+            limits:
+              cpu: 1
+              memory: 3Gi
+          volumeMounts:
+          - name: acceptation-donnees
+            mountPath: /var/opt/mssql/data
+      volumes:
+        - name: acceptation-donnees
+          persistentVolumeClaim:
+            claimName: acceptation-pvc
