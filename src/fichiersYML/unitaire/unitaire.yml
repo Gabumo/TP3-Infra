@@ -39,7 +39,6 @@ spec:
                 secretKeyRef:
                   name: secret-unitaire
                   key: connectionString_Default
-
 ---
 
 apiVersion: apps/v1
@@ -68,6 +67,13 @@ spec:
       containers:
         - name: sqlserver-unitaire
           image: mcr.microsoft.com/mssql/server:2019-latest
+          volumeMounts:
+          - name: unitaire-donnees
+            mountPath: /var/opt/mssql/data
+      volumes:
+        - name: unitaire-donnees
+          persistentVolumeClaim:
+            claimName: unitaire-pvc
           ports:
             - containerPort: 1433
           env:
@@ -90,4 +96,3 @@ spec:
             limits:
               cpu: 1
               memory: 3Gi
----
