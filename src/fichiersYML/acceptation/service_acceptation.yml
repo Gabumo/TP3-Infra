@@ -1,0 +1,92 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: acceptation-pv
+  namespace: acceptation
+spec:
+  storageClassName: manual
+  capacity:
+    storage: 1Gi
+  accessModes:
+  - ReadWriteOnce
+  hostPath:
+    path: /run/desktop/mnt/host/c/DonneesInfra/Acceptation
+
+---
+
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: acceptation-pvc
+  namespace: acceptation
+spec:
+  storageClassName: manual
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+  volumeName: acceptation-pv
+
+---
+
+apiVersion: v1
+kind: Secret
+metadata:
+  name: secret-acceptation
+  namespace: acceptation
+data: 
+  connectionString_Default: U2VydmVyPXNxbC11bml0YWlyZS1zZXJ2aWNlO0RhdGFiYXNlPUdDLldlYlJlYWN0O1VzZXIgSWQ9c2E7UGFzc3dvcmQ9UEBzc3cwcmQ7TXVsdGlwbGVBY3RpdmVSZXN1bHRTZXRzPXRydWU7
+  MSSQL_SA_PASSWORD: UEBzc3cwcmQ=
+# "Server=sql-acceptation-service;Database=GC.WebReact;User Id=sa;Password=P@ssw0rd;MultipleActiveResultSets=true;"
+---
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: configmap-acceptation
+  namespace: acceptation
+data:
+  ASPNETCORE_URLS: "http://0.0.0.0:80"
+  MSSQL_PID: "Developer"
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: acceptation-service
+  namespace: acceptation
+  labels:
+    app: GC.WebReact
+    tier: web
+    env: acceptation
+spec:
+  selector:
+    app: GC.WebReact
+    tier: web
+    env: acceptation
+  ports:
+    - protocol: TCP
+      port: 80
+      nodePort: 30000
+  type: NodePort
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: sql-acceptation-service
+  namespace: acceptation
+  labels:
+    app: GC.WebReact
+    env: acceptation
+spec:
+  selector:
+    tier: database
+    env: acceptation
+  ports:
+  - name: sqlserver-acceptation
+    protocol: TCP
+    port: 1433
