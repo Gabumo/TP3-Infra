@@ -11,5 +11,5 @@
 
 ## Lien de la vidéo de présentation
 
-- Lien YouTube #1 :
+- Lien YouTube #1 : https://youtu.be/LAmjD5Iwns0
 - Lien YouTube #2 (si applicable) :
